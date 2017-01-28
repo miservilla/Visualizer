@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * @author Michael Servilla
  * @version date 2017-01-28
- * A program that utilizes jar file Display with code to make visual graphical
+ * A program that utilizes a jar file Display with code to make visual graphical
  * designs (Square box, circle on a circle, and in and out box).
  */
 public class Visualizer {
@@ -14,11 +14,6 @@ public class Visualizer {
 
     public static void main(String[] args) {
         Display myDisplay = new Display(500, POINT_SIZE);
-
-        //An array that is used with the drawInBox and drawOutBox
-        //methods to decrement and increment cursor location.
-        int[] location = {0, myDisplay.getHeight(),0 , myDisplay.getWidth()};
-
 
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter:");
@@ -34,14 +29,14 @@ public class Visualizer {
                     break;
             case 2: drawCircleCircle(myDisplay);
                     break;
-            case 3: drawInBox(myDisplay, location);
+            case 3: drawInBox(myDisplay, 0,
+                    myDisplay.getHeight(), 0, myDisplay.getWidth());
         }
 
     }
-
     /**
      * Method to draw a square box starting from upper left corner (0, 0),
-     * one iteration.
+     * going clockwise, one iteration.
      * @param myDisplay Object created to host graphical interface.
      * @param yTop Vertical top location.
      * @param yBottom Vertical bottom location.
@@ -71,7 +66,6 @@ public class Visualizer {
             myDisplay.drawNextPoint(x, y);
         }
     }
-
     /**
      * Method to draw an outer circle rotating around the radius of an inner
      * circle, infinite iterations.
@@ -109,18 +103,17 @@ public class Visualizer {
             //counterclockwise. Increment allows circle to rotate clockwise.
         }
     }
-
     /**
      * Method to increment drawSquareBox coordinates, recursive between
      * drawInBox and drawOutBox.
      * @param myDisplay Object created to host graphical interface.
-     * @param location Array with incremented coordinates.
+     * @param yTop Vertical top location.
+     * @param yBottom Vertical bottom location.
+     * @param xLeft Horizontal left location.
+     * @param xRight Horizontal right location.
      */
-    public static void drawInBox(Display myDisplay, int[] location) {
-        int yTop = location[0];
-        int yBottom = location[1];
-        int xLeft = location[2];
-        int xRight = location[3];
+    public static void drawInBox(Display myDisplay, int yTop,
+                                 int yBottom, int xLeft, int xRight) {
 
         while (xRight > 0){
             drawSquareBox(myDisplay, yTop, yBottom, xLeft, xRight);
@@ -129,24 +122,19 @@ public class Visualizer {
             xLeft += POINT_SIZE;
             xRight -= POINT_SIZE;
         }
-        location[0] = yTop;
-        location[1] = yBottom;
-        location[2] = xLeft;
-        location[3] = xRight;
-        drawOutBox(myDisplay, location);
+        drawOutBox(myDisplay, yTop, yBottom, xLeft, xRight);
     }
-
     /**
      * Method to increment drawSquareBox coordinates, recursive between
      * drawInBox and drawOutBox.
      * @param myDisplay Object created to host graphical interface.
-     * @param location Array with decremented coordinates.
+     * @param yTop Vertical top location.
+     * @param yBottom Vertical bottom location.
+     * @param xLeft Horizontal left location.
+     * @param xRight Horizontal right location.
      */
-    public static void drawOutBox(Display myDisplay, int[] location){
-        int yTop = location[0];
-        int yBottom = location[1];
-        int xLeft = location[2];
-        int xRight = location[3];
+    public static void drawOutBox(Display myDisplay, int yTop,
+                                  int yBottom, int xLeft, int xRight){
 
         while (xLeft > 0){
             drawSquareBox(myDisplay, yTop, yBottom, xLeft, xRight);
@@ -155,13 +143,6 @@ public class Visualizer {
             xLeft -= POINT_SIZE;
             xRight += POINT_SIZE;
         }
-        location[0] = yTop;
-        location[1] = yBottom;
-        location[2] = xLeft;
-        location[3] = xRight;
-
-        drawInBox(myDisplay, location);
+        drawInBox(myDisplay, yTop, yBottom, xLeft, xRight);
     }
-
-
 }
