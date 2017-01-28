@@ -11,7 +11,7 @@ public class Visualizer {
     public static final int POINT_SIZE = 5; /** Size of dots. */
 
     public static void main(String[] args) {
-        Display myDisplay = new Display(50, POINT_SIZE);
+        Display myDisplay = new Display(500, POINT_SIZE);
         int[] location = {0, myDisplay.getHeight(),0 , myDisplay.getWidth()};
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter:");
@@ -40,7 +40,7 @@ public class Visualizer {
             myDisplay.drawNextPoint(x, y);
         }
         y = yBottom;
-        for (x = xRight; x >= xLeft; x -= Visualizer.POINT_SIZE) {
+        for (x = xRight; x > xLeft; x -= Visualizer.POINT_SIZE) {
             myDisplay.drawNextPoint(x, y);
         }
         x = xLeft;
@@ -83,10 +83,10 @@ public class Visualizer {
 
         while (xRight > 0){
             drawSquareBox(myDisplay, yTop, yBottom, xLeft, xRight);
-            yTop += Visualizer.POINT_SIZE;
-            yBottom -= Visualizer.POINT_SIZE;
-            xLeft += Visualizer.POINT_SIZE;
-            xRight -= Visualizer.POINT_SIZE;
+            yTop += POINT_SIZE;
+            yBottom -= POINT_SIZE;
+            xLeft += POINT_SIZE;
+            xRight -= POINT_SIZE;
         }
         location[0] = yTop;
         location[1] = yBottom;
@@ -102,10 +102,10 @@ public class Visualizer {
 
         while (xLeft > 0){
             drawSquareBox(myDisplay, yTop, yBottom, xLeft, xRight);
-            yTop -= Visualizer.POINT_SIZE;
-            yBottom += Visualizer.POINT_SIZE;
-            xLeft -= Visualizer.POINT_SIZE;
-            xRight += Visualizer.POINT_SIZE;
+            yTop -= POINT_SIZE;
+            yBottom += POINT_SIZE;
+            xLeft -= POINT_SIZE;
+            xRight += POINT_SIZE;
         }
         location[0] = yTop;
         location[1] = yBottom;
